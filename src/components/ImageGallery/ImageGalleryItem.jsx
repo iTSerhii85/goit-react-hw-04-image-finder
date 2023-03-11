@@ -1,7 +1,14 @@
-// import { Component } from "react";
+import { Modal } from "components/Modal/Modal";
+import { useState } from "react";
 import { ImageGalleryListItem, Img } from "./ImageGallery.style";
 
-export const ImageGalleryItem = ({ pictures, showModal }) => {
+export const ImageGalleryItem = ({ pictures }) => {
+  const [showModal, setShowModal] = useState(null);
+
+  const handleCloseModal=()=>{
+    setShowModal(null)
+  };
+
  return(
   <>
     {pictures.map(picture => {
@@ -10,10 +17,11 @@ export const ImageGalleryItem = ({ pictures, showModal }) => {
         <Img
           src={picture.webformatURL}
           alt={picture.tags}
-          onClick={()=> showModal(picture.largeImageURL)}
+          onClick={()=> setShowModal(picture.largeImageURL)}
         />
       </ImageGalleryListItem>
     )})}
+    {showModal && <Modal imgUrl={showModal} CloseModal={handleCloseModal} />}
   </>
  )
 };
